@@ -5,6 +5,7 @@ import { StatusBar } from 'expo-status-bar'
 import { LinearGradient } from 'expo-linear-gradient'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Animated, { FadeInDown } from 'react-native-reanimated'
+import { useRouter } from 'expo-router'
 
 // Styles from line 1 to 47
 
@@ -49,6 +50,9 @@ const TouchableText = styled.Text`
 
 
 const index = () => {
+
+  const router = useRouter();
+
   return (
     <IndexView>
         <StatusBar style='light' />
@@ -63,7 +67,7 @@ const index = () => {
                <Animated.View entering={FadeInDown.delay(200).springify()}>
                 <TouchableOpacity style={{height: hp(7), width: wp(80), backgroundColor: '#FFA100', display: 'flex', 
                    alignItems: 'center', justifyContent: 'center', marginLeft: 40, marginBottom: 20, marginTop: 15, 
-                   borderColor: 'white', borderRadius: 50}}>
+                   borderColor: 'white', borderRadius: 50}} onPress={() => router.push('home')}>
                   <TouchableText>Comece já</TouchableText>
                 </TouchableOpacity>
                </Animated.View>
