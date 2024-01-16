@@ -4,9 +4,10 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import styled from 'styled-components/native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen'
 import ImageSlider from '../components/ImageSlider'
+import BodyPart from '../components/BodyPart'
 
 
-// Styles from line 11 to 41 
+// Styles from line 11 to 46 
 
 const HomeView = styled.View`
     display: flex;
@@ -39,6 +40,11 @@ const SliderView = styled.View`
 
 
 `
+
+const BodyImageView = styled.View`
+    flex: 1;
+
+`
 // 
 
 const home = () => {
@@ -56,6 +62,11 @@ const home = () => {
         <SliderView>
             <ImageSlider /> 
         </SliderView>
+        
+        <BodyImageView>
+            <BodyPart />
+        </BodyImageView>
+
     </SafeAreaView>
   )
 }
