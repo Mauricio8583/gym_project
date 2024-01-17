@@ -25,11 +25,11 @@ const TextName = styled.Text`
 
 `
 
-const BodyPartCard = ({index, item}) => {
+const BodyPartCard = ({index, item, router}) => {
   return (
     <MainView>
-        <TouchableOpacity style={{width: wp(44), height: wp(52), display: 'flex', justifyContent: 'flex-end', padding: 16, marginBottom: 16}}>
-            <MainImage source={item.image} resizeMode='cover'  />
+        <TouchableOpacity onPress={() => router.push({pathname: '/exercices', params: item})} style={{width: wp(44), height: wp(52), display: 'flex', justifyContent: 'flex-end', padding: 16, marginBottom: 16}}>
+            <MainImage source={item.image} resizeMode='cover' />
             <LinearGradient colors={['transparent', 'rgba(0, 0, 0, 0.9)']} style={{width: wp(44), height: hp(15), position: 'absolute', marginBottom: 0, borderRadius: 35}} 
             start={{x: 0.5, y: 0}} end={{x: 0.5, y: 1}} />
             <TextName>{item?.name}</TextName>            
