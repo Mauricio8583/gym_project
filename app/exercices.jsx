@@ -69,7 +69,7 @@ const exercices = () => {
         <BodyPartImage source={item.image} />
 
         <TouchableOpacity onPress={() => router.back()} style={{backgroundColor: 'orange', margin: 16, borderRadius: 50, height: hp(5.5),
-         width: hp(5.5), marginTop: 0, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+         width: hp(5.5), marginTop: 10, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
             <Ionicons name='caret-back-outline' size={hp(4)} color='white' />
         </TouchableOpacity>
 
