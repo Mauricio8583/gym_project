@@ -3,11 +3,8 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import styled from 'styled-components/native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen'
 import { LinearGradient } from 'expo-linear-gradient'
-
-const MainView = styled.View`
-    position: relative;
-
-`
+import Animated, { FadeInDown } from 'react-native-reanimated'
+import { View } from 'react-native'
 
 const MainImage = styled.Image`
     width: ${wp(44)}px;
@@ -27,7 +24,7 @@ const TextName = styled.Text`
 
 const BodyPartCard = ({index, item, router}) => {
   return (
-    <MainView>
+    <Animated.View style={{position: 'relative'}} entering={FadeInDown.duration(400).delay(index*200).springify()}>
         <TouchableOpacity onPress={() => router.push({pathname: '/exercices', params: item})} style={{width: wp(44), height: wp(52), display: 'flex', justifyContent: 'flex-end', padding: 16, marginBottom: 16}}>
             <MainImage source={item.image} resizeMode='cover' />
             <LinearGradient colors={['transparent', 'rgba(0, 0, 0, 0.9)']} style={{width: wp(44), height: hp(15), position: 'absolute', marginBottom: 0, borderRadius: 35}} 
@@ -35,7 +32,7 @@ const BodyPartCard = ({index, item, router}) => {
             <TextName>{item?.name}</TextName>            
             
         </TouchableOpacity>
-    </MainView>    
+    </Animated.View>    
   )
 }
 
