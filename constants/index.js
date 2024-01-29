@@ -1,4 +1,5 @@
 export const apiKey = 'b0b83881e0msh80c0ecd6acb5b47p1491d8jsnb95196eb076c'
+export const apiKeyTranslate = 'b0b83881e0msh80c0ecd6acb5b47p1491d8jsnb95196eb076c'
 
 export const sliderImages = [
     require('../assets/images/slide1.jpg'),

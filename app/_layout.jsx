@@ -3,7 +3,7 @@ import React from 'react'
 import { LogBox } from 'react-native'
 
 const Layout = () => {
-  LogBox.ignoreLogs(['Warning: Failed prop type:', 'Cannot set prop'])
+  LogBox.ignoreLogs(['Warning: Failed prop type:', 'Cannot set prop', 'Possible Unhandled Promise Rejection'])
 
   return (
     <Stack screenOptions={{

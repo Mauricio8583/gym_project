@@ -1,11 +1,12 @@
 import { Image } from 'expo-image'
 import { useLocalSearchParams, useRouter } from 'expo-router'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components/native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Anticons from 'react-native-vector-icons/AntDesign'
-import { ScrollView } from 'react-native'
+import {ScrollView } from 'react-native'
+import { apiCallTranslate } from '../api/translate'
 
 const MainView = styled.View`
     display: flex;
@@ -46,13 +47,39 @@ const InstructionText = styled.Text`
 
 `
 
+const ErrorMessage = styled.Text`
+
+
+`
+
+const SearchForInfo = styled.Text`
+    color: blue;
+
+`
+
 const exerciseDetails = () => {
 
   const item = useLocalSearchParams();
   const router = useRouter();
+  const [translations, setTranslations] = useState('');
+  const [doneWith, setDoneWith] = useState('');
+  const [secondaryMuscles, setSecondaryMuscle] = useState('');
+  const [targetMuscles, setTargetMuscle] = useState('');
+  let itemLength = Object.keys(item).length;
+  
+
+  const getTranslation = async (sentence, action) => {
+    let data = await apiCallTranslate(sentence);
+    let translated = data[0].translations[0].text
+    action(translated)
+    
+  } 
+
+  
 
   return (
     <MainView>
+        
         <Image source={{uri: item.gifUrl}} contentFit='cover' style={{width: wp(100), height: wp(100), borderRadius: 40}} /> 
 
         <TouchableOpacity onPress={() => router.back()} style={{margin: 8, borderRadius: 50, right: 0}} >
@@ -62,29 +89,32 @@ const exerciseDetails = () => {
         <ScrollView style={{margin: 16, marginTop: 12}} showsVerticalScrollIndicator={false} contentContainerStyle={{paddingBottom: 60}}>
             <ExerciseNameText>{item.name}</ExerciseNameText>
             <EquipmentText>
-                Realizado com <ShowEquipmentText>{item?.equipment}</ShowEquipmentText>                 
+                Realizado com <ShowEquipmentText>{ getTranslation(item?.equipment, setDoneWith) ? doneWith : ''}</ShowEquipmentText>                 
             </EquipmentText> 
             <EquipmentText>
-                Músculos Secundários <ShowEquipmentText>{item?.secondaryMuscles}</ShowEquipmentText>                 
+                Músculos Secundários <ShowEquipmentText>{getTranslation(item?.secondaryMuscles, setSecondaryMuscle) ? secondaryMuscles: ''}</ShowEquipmentText>                 
             </EquipmentText> 
             <EquipmentText>
-                Músculo Alvo <ShowEquipmentText>{item?.target}</ShowEquipmentText>                 
+                Músculo Alvo <ShowEquipmentText>{getTranslation(item?.target, setTargetMuscle) ? targetMuscles: ''}</ShowEquipmentText>                 
             </EquipmentText>  
 
             <InstructionsText>
                 Instruções                                
             </InstructionsText> 
-            {
-                item?.instructions?.split(',').map((instruction, index) => {
+            { getTranslation(item.instructions, setTranslations) ? 
+                translations.split(',').map((instruction, index) => {
                     return (
-                        <InstructionText key={instruction}>
+                        <InstructionText key={index}>
                             {instruction}
                         </InstructionText>                        
                     )
                  })
-            }
+            : ''}
 
-        </ScrollView>     
+            {itemLength == 0 ? <ErrorMessage>Desculpe, não foi possível conceder informações sobre este exercicio</ErrorMessage> : ''}
+
+        </ScrollView>
+            
     </MainView>
   )
 }
